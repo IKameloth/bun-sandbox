@@ -19,10 +19,14 @@ export const useTocStore = create<TocState>((set, get) => ({
   sections: [],
   update: (mdast: Root) => {
     if (mdast) {
+      const prevSections = get().sections
+
       const sections = mdastExtractHeadings(mdast).map(head => {
+        const prev = prevSections.find(section => section.id === head.id)
+
         return {
           ...head,
-          headingRef: null
+          headingRef: prev ? prev.headingRef : null
         }
       })
       set({ sections })
