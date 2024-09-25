@@ -11,25 +11,27 @@ export const MarkdownOutlineView = () => {
       <Heading as="h2" fontSize="1em">
         On this page
       </Heading>
-      <Box
-        position="relative"
-        top={0}
-        left="0.75em"
-        bottom={0}
-        width="1px"
-        backgroundColor="var(--color-muted)"
-      />
-      <Box as="ul" role="list" m={0} pl="1.5em" listStyle="none">
-        {sections.map(heading => {
-          return (
-            <MarkdownOutlineItem
-              {...heading}
-              key={heading.id}
-              level={heading.level - minLevel}
-              active={false}
-            />
-          )
-        })}
+      <Box position="relative">
+        <Box
+          position="absolute"
+          top={0}
+          left="0.75em"
+          bottom={0}
+          width="1px"
+          backgroundColor="var(--color-muted)"
+        />
+        <Box as="ul" role="list" m={0} pl="1.5em" listStyle="none">
+          {sections.map(heading => {
+            return (
+              <MarkdownOutlineItem
+                {...heading}
+                key={heading.id}
+                level={heading.level - minLevel}
+                active={false}
+              />
+            )
+          })}
+        </Box>
       </Box>
     </Box>
   )

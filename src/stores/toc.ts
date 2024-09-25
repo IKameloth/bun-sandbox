@@ -8,11 +8,16 @@ import type { Root } from 'mdast'
 
 export type Section = TOCHeading & {
   headingRef: RefObject<HTMLHeadingElement> | null
+  outlineRef: RefObject<HTMLLIElement> | null
+  isVisible: boolean
 }
+
 export type TocState = {
   sections: Section[]
   update: (mdast: Root) => void
   registerHeading: (id: string, ref: RefObject<HTMLHeadingElement>) => void
+  registerOutlineItem: (id: string, ref: RefObject<HTMLLIElement>) => void
+  setVisibleHeadings: (id: string[]) => void
 }
 
 export const useTocStore = create<TocState>((set, get) => ({
@@ -26,7 +31,9 @@ export const useTocStore = create<TocState>((set, get) => ({
 
         return {
           ...head,
-          headingRef: prev ? prev.headingRef : null
+          headingRef: prev ? prev.headingRef : null,
+          outlineRef: prev ? prev.outlineRef : null,
+          isVisible: false
         }
       })
       set({ sections })
@@ -39,6 +46,21 @@ export const useTocStore = create<TocState>((set, get) => ({
       sections: state.sections.map(section =>
         section.id === id ? { ...section, headingRef: ref } : section
       )
+    }))
+  },
+  registerOutlineItem: (id: string, ref: RefObject<HTMLLIElement>) => {
+    set(state => ({
+      sections: state.sections.map(section =>
+        section.id === id ? { ...section, outlineRef: ref } : section
+      )
+    }))
+  },
+  setVisibleHeadings: (ids: string[]) => {
+    set(state => ({
+      sections: state.sections.map(section => ({
+        ...section,
+        isVisible: ids.includes(section.id)
+      }))
     }))
   }
 }))
