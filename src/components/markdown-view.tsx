@@ -11,5 +11,5 @@ export const MarkdownView: React.FC = () => {
     render(markdownContent)
   }, [render])
 
-  return <Box>{dom || 'rendering...'}</Box>
+  return <Box className="markdown-view">{dom ? dom : 'rendering...'}</Box>
 }
