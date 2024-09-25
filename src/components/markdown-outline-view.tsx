@@ -21,7 +21,7 @@ export const MarkdownOutlineView = () => {
           width="1px"
           backgroundColor="var(--color-muted)"
         />
-        <MarkdownOutlineActiveSectionHighlight />
+        <MarkdownOutlineActiveSectionHighlight sections={sections} />
         <Box as="ul" role="list" m={0} pl="1.5em" listStyle="none">
           {sections.map(heading => {
             return (
